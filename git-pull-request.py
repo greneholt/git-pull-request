@@ -207,7 +207,7 @@ def close_pull_request(repo_name, pull_request_ID, comment = None):
 	if comment is not None and comment != '':
 		post_comment(repo_name, pull_request_ID, comment)
 
-	url = "http://github.com/api/v2/json/issues/close/%s/%s" % (repo_name, pull_request_ID)
+	url = "https://api.github.com/issues/close/%s/%s" % (repo_name, pull_request_ID)
 	github_json_request(url)
 
 def color_text(text, token, bold = False):
@@ -312,7 +312,7 @@ def command_info(username):
 	print color_text("Loading information on repositories for %s" % username, 'status')
 	print
 
-	url = "http://github.com/api/v2/json/repos/show/%s" % username
+	url = "https://api.github.com/repos/show/%s" % username
 	data = github_json_request(url)
 	repos = data['repositories']
 
@@ -419,7 +419,7 @@ def command_submit(repo_name, username, reviewer_repo_name = None, pull_body = N
 	if ret != 0:
 		raise UserWarning("Could not push this branch to your origin")
 
-	url = "http://github.com/api/v2/json/pulls/%s" % reviewer_repo_name
+	url = "https://api.github.com/pulls/%s" % reviewer_repo_name
 
 	# pull[base] - A String of the branch or commit SHA that you want your changes to be pulled to.
 	# pull[head] - A String of the branch or commit SHA of your changes. Typically this will be a branch. If the branch is in a fork of the original repository, specify the username first: "my-user:some-branch".
@@ -607,7 +607,7 @@ def get_original_dir_path():
 def get_pull_request(repo_name, pull_request_ID):
 	"""Returns information retrieved from github about the pull request"""
 
-	url = "http://github.com/api/v2/json/pulls/%s/%s" % (repo_name, pull_request_ID)
+	url = "https://api.github.com/pulls/%s/%s" % (repo_name, pull_request_ID)
 	data = github_json_request(url)
 
 	return data['pull']
@@ -616,7 +616,7 @@ def get_pull_requests(repo_name):
 	"""Returns information retrieved from github about the open pull requests on
 	the repository"""
 
-	url = "http://github.com/api/v2/json/pulls/%s/open" % repo_name
+	url = "https://api.github.com/pulls/%s/open" % repo_name
 	data = github_json_request(url)
 
 	return data['pulls']
@@ -803,7 +803,7 @@ def open_URL(url):
 	os.system('open "%s"' % url)
 
 def post_comment(repo_name, pull_request_ID, comment):
-	url = "http://github.com/api/v2/json/issues/comment/%s/%s" % (repo_name, pull_request_ID)
+	url = "https://api.github.com/issues/comment/%s/%s" % (repo_name, pull_request_ID)
 	params = {'comment': comment}
 	github_json_request(url, params)
 
